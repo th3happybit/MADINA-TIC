@@ -1,0 +1,6 @@
+[submodule "MADINA-TIC-BACK"]
+	path = MADINA-TIC-BACK
+	url = https://github.com/th3happybit/MADINA-TIC-BACK.git
+[submodule "MADINA-TIC-FRONT"]
+	path = MADINA-TIC-FRONT
+	url = https://github.com/th3happybit/MADINA-TIC-FRONT.git

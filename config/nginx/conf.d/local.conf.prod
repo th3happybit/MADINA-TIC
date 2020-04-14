@@ -1,0 +1,40 @@
+# Gunicorn webserver is the upsteam server
+upstream gunicorn_server {
+    # host:port
+    server backend:8000;
+}
+
+# main server
+server {
+
+    listen 80;
+    server_name madina-tic.dz;
+
+    location /api {
+        # everything is passed to Gunicorn
+        proxy_pass http://gunicorn_server;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        proxy_redirect off;
+    }
+
+    location / {
+      root /opt/frontend/build;
+      try_files $uri $uri/ /index.html;
+    }
+
+    # STATIC_ROOT
+    location /static/ {
+        alias /opt/frontend/build/static/;
+    }
+
+    # STATIC_ROOT
+    location /api/static/ {
+        alias /opt/backend/static/;
+    }
+
+    # MEDIA_ROOT
+    location /api/media/ {
+        alias /opt/backend/media/;
+    }
+}

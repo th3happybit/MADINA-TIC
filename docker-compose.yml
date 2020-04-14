@@ -1,0 +1,77 @@
+version: '2'
+services:
+
+  backend:
+    image: madina-tic/backend:0.1
+    volumes:
+      - ./madina-tic-back:/opt/backend
+      - migrations:/opt/backend/api/migrations
+      - static_volume:/opt/backend/static
+      - media_volume:/opt/backend/media
+    networks:
+      - backend
+      - backend_postgres
+    ports:
+      - 8000:8000
+    depends_on:
+      - "postgres"
+    restart: on-failure
+    environment:
+      - PG_HOSTNAME=postgres
+      - DJANGO_SETTINGS_MODULE=backend.settings
+      
+  frontend:
+    image: madina-tic/frontend:0.2
+    volumes:
+      - ./madina-tic-front:/opt/frontend
+      - node_modules:/opt/frontend/node_modules
+    links:
+      - nginx
+    networks:
+      - backend
+    ports:
+      - 5000:5000
+    depends_on:
+      - backend
+    restart: on-failure
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - static_volume:/opt/backend/static
+      - media_volume:/opt/backend/media
+      - ./madina-tic-front:/opt/frontend
+    depends_on:
+      - backend
+    networks:
+      - backend
+    restart: on-failure
+      
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: madina-tic
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend_postgres
+    restart: on-failure
+
+volumes:
+  migrations:
+  pgdata:
+  static_volume:
+  media_volume:
+  node_modules:  
+
+networks:
+  backend:
+  backend_postgres:
