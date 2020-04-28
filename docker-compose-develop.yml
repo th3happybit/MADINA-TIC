@@ -4,7 +4,6 @@ services:
   backend:
     image: madina-tic/backend:0.1
     volumes:
-      - ./madina-tic-back:/opt/backend
       - migrations:/opt/backend/api/migrations
       - static_volume:/opt/backend/static
       - media_volume:/opt/backend/media
@@ -17,21 +16,6 @@ services:
     environment:
       - PG_HOSTNAME=postgres
       - DJANGO_SETTINGS_MODULE=backend.settings
-      
-  frontend:
-    image: madina-tic/frontend:0.1
-    volumes:
-      - ./madina-tic-front:/opt/frontend
-      - node_modules:/opt/frontend/node_modules
-    links:
-      - nginx
-    networks:
-      - backend
-    ports:
-      - 3000:3000
-    depends_on:
-      - backend
-    restart: on-failure
 
   nginx:
     image: nginx:alpine
@@ -42,20 +26,11 @@ services:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
       - static_volume:/opt/backend/static
       - media_volume:/opt/backend/media
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
     depends_on:
       - backend
-      - certbot
     networks:
       - backend
     restart: on-failure
-
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
       
   postgres:
     image: postgres:alpine
@@ -75,9 +50,7 @@ volumes:
   migrations:
   pgdata:
   static_volume:
-  media_volume:
-  node_modules:
-  
+  media_volume:  
 
 networks:
   backend:
