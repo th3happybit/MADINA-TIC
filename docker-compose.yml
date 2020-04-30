@@ -4,7 +4,6 @@ services:
   backend:
     image: madina-tic/backend:0.1
     volumes:
-      - ./MADINA-TIC-BACK:/opt/backend
       - migrations:/opt/backend/api/migrations
       - static_volume:/opt/backend/static
       - media_volume:/opt/backend/media
@@ -23,8 +22,7 @@ services:
   frontend:
     image: madina-tic/frontend:0.2
     volumes:
-      - ./MADINA-TIC-FRONT:/opt/frontend
-      - node_modules:/opt/frontend/node_modules
+      - MADINA-TIC-FRONT:/opt/frontend
     links:
       - nginx
     networks:
@@ -44,7 +42,7 @@ services:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
       - static_volume:/opt/backend/static
       - media_volume:/opt/backend/media
-      - ./MADINA-TIC-FRONT:/opt/frontend
+      - MADINA-TIC-FRONT:/opt/frontend
     depends_on:
       - backend
     networks:
@@ -70,7 +68,7 @@ volumes:
   pgdata:
   static_volume:
   media_volume:
-  node_modules:  
+  MADINA-TIC-FRONT:  
 
 networks:
   backend:
