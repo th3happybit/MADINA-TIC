@@ -9,7 +9,8 @@ server {
 
     listen 80;
     server_name madina-tic.dz;
-
+    client_max_body_size 100M;
+    
     location /api {
         # everything is passed to Gunicorn
         proxy_pass http://gunicorn_server;
