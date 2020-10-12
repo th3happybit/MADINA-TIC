@@ -7,6 +7,7 @@ services:
       - migrations:/opt/backend/api/migrations
       - static_volume:/opt/backend/static
       - media_volume:/opt/backend/media
+      - ./backups:/opt/backend/backups
     networks:
       - backend
       - backend_postgres

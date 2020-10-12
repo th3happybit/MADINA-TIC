@@ -1,6 +1,6 @@
 #!/bin/bash
 
-domains=(madina-tic.ml www.madina-tic.ml)
+domains=(madina-tic.ml)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="oussamamessabih02@gmail.com" # Adding a valid address is strongly recommended
