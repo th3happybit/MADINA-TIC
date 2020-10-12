@@ -2,9 +2,9 @@
 MADINA-TIC project is based on django for backend and react for frontend,
 postgresql for database and nginx as a web proxy.
 
-## deployment:
+## Deployment:
 
-### docker deployment:
+### Docker deployment:
 ![](img/deployment.png)
 ====
 
@@ -32,7 +32,7 @@ postgresql for database and nginx as a web proxy.
 			- use nginx prod config inside `local.config.prod` in place of local.conf `cp local.config.https local.config`
 			- `sudo docker-compose up -d`
 
-### manual deployment
+### Manual deployment
 	- requirements:
 		1. python 3.8 and pip
 		2. nodejs and yarn
@@ -47,7 +47,7 @@ postgresql for database and nginx as a web proxy.
 		- run the server:
 			- `yarn start`
 
-## docs
+## Docs
 
 1. First login as an admin:
 
